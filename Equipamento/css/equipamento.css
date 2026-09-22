@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 980px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+    color: #222;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    color: white;
+    background-color: #19324a;
+}
+
+.logo,
+.nav-link {
+    color: white;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.nav-link {
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.nav-link:hover,
+.nav-link.ativo {
+    background-color: #2779bd;
+}
+
+h1 {
+    margin: 0 0 20px;
+}
+
+.formulario {
+    margin-bottom: 28px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+}
+
+label {
+    display: inline-block;
+    margin: 8px 4px 8px 0;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 9px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    margin: 4px 4px 20px 0;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+    background-color: #2779bd;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1d5f96;
+}
+
+button:disabled,
+button:disabled:hover {
+    color: #e5e7eb;
+    background-color: #9aa5ad;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#alterar button {
+    background-color: #d88a18;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    color: white;
+    background-color: #333;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+tbody button {
+    margin: 0 4px 0 0;
+    padding: 6px 10px;
+}
+
+@media (max-width: 600px) {
+    body {
+        margin-top: 20px;
+    }
+
+    .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-links {
+        justify-content: flex-start;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamentos</title>
+    <link rel="stylesheet" href="css/equipamento.css">
+</head>
+<body>
+    <nav class="navbar" aria-label="Navegação principal">
+        <a class="logo" href="equipamento.html">Owners</a>
+        <div class="nav-links">
+            <a class="nav-link" href="equipamento.html" aria-current="page">Equipamento</a>
+            <a class="nav-link" href="professor.html">Professor</a>
+            <a class="nav-link" href="sala.html">Sala</a>
+            <a class="nav-link" href="aluno.html">Aluno</a>
+            <a class="nav-link" href="tecnico.html">Técnico</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Equipamentos</h1>
+        <section class="formulario" aria-labelledby="titulo-formulario">
+            <h2 id="titulo-formulario">Adicionar equipamento</h2>
+            <label for="nome">Equipamento:</label>
+            <input type="text" name="nome" id="nome">
+            <label for="tipo">Tipo:</label>
+            <input type="text" name="tipo" id="tipo">
+            <button id="btnEnviar">Enviar</button>
+            <div id="alterar"></div>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Editar</th>
+                    <th>Apagar</th>
+                </tr>
+            </thead>
+            <tbody id="conteudoTabela">
+            </tbody>
+        </table>
+    </main>
+</body>
+<script src="js/equipamento.js"></script>
+</html>
