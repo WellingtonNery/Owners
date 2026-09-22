@@ -28,7 +28,7 @@
 
                 <nav class="flex flex-wrap gap-2">
                     <a href="aluno.html"
-                        class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition">
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
                         Alunos
                     </a>
 
@@ -48,7 +48,7 @@
                     </a>
 
                     <a href="tecnico.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition">
                         Técnicos
                     </a>
 
@@ -65,12 +65,14 @@
 
     <main class="max-w-7xl mx-auto px-6 py-10">
 
-        <section id="alunos" class="aba">
+        <!-- ================= TÉCNICOS ================= -->
+
+        <section id="tecnicos" class="aba">
 
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-slate-900">Alunos</h2>
+                <h2 class="text-3xl font-bold text-slate-900">Técnicos</h2>
                 <p class="text-slate-500 mt-1">
-                    Cadastre e gerencie os alunos do sistema.
+                    Cadastre e gerencie os técnicos do sistema.
                 </p>
             </div>
 
@@ -79,7 +81,7 @@
 
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <h3 class="text-xl font-semibold">Novo aluno</h3>
+                        <h3 class="text-xl font-semibold">Novo técnico</h3>
                         <p class="text-sm text-slate-500">
                             Preencha os dados abaixo para cadastrar.
                         </p>
@@ -92,48 +94,47 @@
                 </div>
 
 
-                <form id="form-aluno" onSubmit="salvarAluno(event)"
+                <form id="form-tecnico"
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-
-                    <input type="hidden" id="usuario-id">
 
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-semibold text-slate-700">Nome</label>
-                        <input type="text" id="usuario-nome" placeholder="Nome completo"
+                        <input type="text" id="tecnico-nome" placeholder="Nome completo"
                             class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
                     </div>
 
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-semibold text-slate-700">Email</label>
-                        <input type="email" id="usuario-email" placeholder="email@exemplo.com"
+                        <input type="email" id="tecnico-email" placeholder="email@exemplo.com"
                             class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
                     </div>
 
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-semibold text-slate-700">CPF</label>
-                        <input type="text" id="usuario-cpf" placeholder="000.000.000-00"
+                        <input type="text" id="tecnico-cpf" placeholder="000.000.000-00"
                             class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
                     </div>
 
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-semibold text-slate-700">Telefone</label>
-                        <input type="text" id="usuario-telefone" placeholder="(41) 99999-9999"
+                        <input type="text" id="tecnico-telefone" placeholder="(41) 99999-9999"
                             class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
                     </div>
 
                     <div class="flex flex-col gap-2 md:col-span-2">
                         <label class="text-sm font-semibold text-slate-700">Endereço</label>
-                        <input type="text" id="usuario-endereco" placeholder="Rua, número, bairro..."
+                        <input type="text" id="tecnico-endereco" placeholder="Rua, número, bairro..."
                             class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
                     </div>
 
                     <div class="lg:col-span-3 flex justify-end pt-2">
-                        <button type="submit"
+                        <button type="button"
                             class="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:-translate-y-0.5 shadow-md shadow-blue-200 transition"
-                            id="salvar_button"
-                            >
-                            Salvar aluno
+                            id="botao-salvar">
+                            Salvar técnico
                         </button>
+
+                        <div id="alterar"></div>
                     </div>
 
                 </form>
@@ -145,16 +146,11 @@
 
                 <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
                     <div>
-                        <h3 class="text-xl font-semibold">Alunos cadastrados</h3>
+                        <h3 class="text-xl font-semibold">Técnicos cadastrados</h3>
                         <p class="text-sm text-slate-500">
-                            Lista de alunos cadastrados no sistema.
+                            Lista de técnicos cadastrados no sistema.
                         </p>
                     </div>
-
-                    <button onclick="carregarAluno()"
-                        class="px-4 py-2 rounded-lg border border-slate-300 font-medium text-slate-700 hover:bg-slate-100 transition">
-                        Atualizar
-                    </button>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -173,7 +169,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="aluno-lista" class="divide-y divide-slate-200">
+                        <tbody id="tecnico-lista" class="divide-y divide-slate-200">
                         </tbody>
 
                     </table>
@@ -183,7 +179,8 @@
 
         </section>
     </main>
-    <script src="aluno.js"></script>
+
+    <script src="tecnico.js"></script>
 
 </body>
 
