@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage - Equipamento</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <label for="nome">Equipamento:</label>
+    <input type="text" name="nome" id="nome">
+    <label for="tipo">Tipo:</label>
+    <input type="text" name="tipo" id="tipo">
+    <button id="btnEnviar">Enviar</button>
+    <div id="alterar"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Editar</th>
+                <th>Apagar</th>
+            </tr>
+        </thead>
+        <tbody id="conteudoTabela">
+        </tbody>
+    </table>
+</body>
+<script src="js/index.js"></script>
+</html>
