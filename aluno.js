@@ -1,14 +1,22 @@
 let editando = false;
 let usuarioEditando = null;
+let usuarios = [];
 
-function salvarAluno(event) {
+function alternarBotoes(emEdicao) {
+    document.getElementById("salvar_button").classList.toggle("hidden", emEdicao);
+    document.getElementById("alterar_button").classList.toggle("hidden", !emEdicao);
+}
+
+async function salvarAluno(event) {
     event.preventDefault();
 
     const usuarioNome = document.getElementById('usuario-nome').value;
     const usuarioCpf = document.getElementById('usuario-cpf').value;
     const usuarioEmail = document.getElementById('usuario-email').value;
     const usuarioTelefone = document.getElementById('usuario-telefone').value;
-    const usuarioEndereco = document.getElementById('usuario-endereco').value;
+    const usuarioSenha = document.getElementById('usuario-senha').value;
+    const usuarioPronomes = document.getElementById('usuario-pronomes').value;
+    const usarioTipo = document.getElementById('usuario-tipo').value;
 
     if (editando) {
 
@@ -17,16 +25,18 @@ function salvarAluno(event) {
             nome: usuarioNome,
             cpf: usuarioCpf,
             email: usuarioEmail,
+            senha: usuarioSenha,
             telefone: usuarioTelefone,
-            endereco: usuarioEndereco,
+            pronomes: usuarioPronomes,
+            tipo: usarioTipo
         };
 
-        editarAluno(usuarioEditando.id, usuario);
+        await editarAluno(usuarioEditando.id, usuario);
 
         editando = false;
         usuarioEditando = null;
 
-        document.getElementById("salvar_button").innerHTML = "Salvar usuario";
+        alternarBotoes(false);
 
         event.target.reset();
 
@@ -35,34 +45,47 @@ function salvarAluno(event) {
         return;
     }
 
-    const usuariosAtuais = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-    let idContagem = 1;
-
-    if (usuariosAtuais.length > 0) {
-        idContagem = usuariosAtuais.length + 1;
-    }
-
     const usuario = {
-        id: idContagem,
         nome: usuarioNome,
         cpf: usuarioCpf,
         email: usuarioEmail,
+        senha: usuarioSenha,
         telefone: usuarioTelefone,
-        endereco: usuarioEndereco,
+        pronomes: usuarioPronomes,
+        tipo: usarioTipo
     };
 
-    usuariosAtuais.push(usuario);
+    const dados = new FormData();
+    dados.append('nome', usuario.nome);
+    dados.append('cpf', usuario.cpf);
+    dados.append('email', usuario.email);
+    dados.append('senha', usuario.senha);
+    dados.append('telefone', usuario.telefone);
+    dados.append('pronomes', usuario.pronomes);
+    dados.append('tipo', usuario.tipo);
 
-    localStorage.setItem('usuarios', JSON.stringify(usuariosAtuais));
+    const resposta = await fetch('php/usuario_php/usuario_novo.php', {
+        method: 'POST',
+        body: dados
+    });
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
 
     event.target.reset();
 
-    carregarAluno();
+    await carregarAluno();
 }
 
-function carregarAluno() {
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+async function carregarAluno() {
+    const resposta = await fetch('php/usuario_php/usuario_get.php');
+    const retorno = await resposta.json();
+
+    usuarios = [];
+    if (retorno.status === 'ok') {
+        usuarios = retorno.data;
+    }
+
     const lista = document.getElementById('aluno-lista');
 
     lista.innerHTML = "";
@@ -71,7 +94,7 @@ function carregarAluno() {
         lista.innerHTML += `
             <tr class="hover:bg-slate-50 transition">
                 <td class="px-6 py-4 font-medium text-slate-500">
-                    #${usuario.id}
+                    #${usuario.id_usuario}
                 </td>
 
                 <td class="px-6 py-4 font-semibold text-slate-900">
@@ -90,21 +113,17 @@ function carregarAluno() {
                     ${usuario.telefone}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
-                    ${usuario.endereco}
-                </td>
-
                 <td class="px-6 py-4">
                     <div class="flex justify-center gap-2">
 
                         <button 
-                            onClick="resgatarAluno(${usuario.id})"
+                            onClick="resgatarAluno(${usuario.id_usuario})"
                             class="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 font-medium hover:bg-amber-200 transition">
                             Editar
                         </button>
 
                         <button 
-                            onclick="deletarAluno(${usuario.id})"
+                            onclick="deletarAluno(${usuario.id_usuario})"
                             class="px-3 py-2 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
                             Excluir
                         </button>
@@ -116,17 +135,18 @@ function carregarAluno() {
     }
 }
 
-function resgatarAluno(id) {
-    const usuariosCorreto = JSON.parse(localStorage.getItem('usuarios')).filter(u => {
-        return u.id == id
+async function resgatarAluno(id) {
+    const usuariosCorreto = usuarios.filter(u => {
+        return u.id_usuario == id
     })
     const usuarioNome = document.getElementById('usuario-nome').value = usuariosCorreto[0].nome;
     const usuarioCpf = document.getElementById('usuario-cpf').value = usuariosCorreto[0].cpf;
     const usuarioEmail = document.getElementById('usuario-email').value = usuariosCorreto[0].email;
     const usuarioTelefone = document.getElementById('usuario-telefone').value = usuariosCorreto[0].telefone;
-    const usuarioEndereco = document.getElementById('usuario-endereco').value = usuariosCorreto[0].endereco;
-    const save_button = document.getElementById("salvar_button")
-    save_button.innerHTML = "Editar usuario"
+    const usuarioSenha = document.getElementById('usuario-senha').value = usuariosCorreto[0].senha || "";
+    const usuarioPronomes = document.getElementById('usuario-pronomes').value = usuariosCorreto[0].pronomes || "";
+    const usuarioTipo = document.getElementById('usuario-tipo').value = usuariosCorreto[0].tipo || "";
+    alternarBotoes(true)
     editando = true
 
     const usuario = {
@@ -134,34 +154,42 @@ function resgatarAluno(id) {
         nome: usuarioNome,
         cpf: usuarioCpf,
         email: usuarioEmail,
+        senha: usuarioSenha,
         telefone: usuarioTelefone,
-        endereco: usuarioEndereco,
+        pronomes: usuarioPronomes,
+        tipo: usuarioTipo,
     };
     usuarioEditando = usuario
 
 }
 
-function editarAluno(id, aluno) {
-    const usuariosEditar = JSON.parse(localStorage.getItem('usuarios')).map(u => {
-        if (u.id == id) {
-            u.nome = aluno.nome;
-            u.cpf = aluno.cpf;
-            u.email = aluno.email;
-            u.telefone = aluno.telefone;
-            u.endereco = aluno.endereco;
-        }
+async function editarAluno(id, aluno) {
+    const dados = new FormData();
+    dados.append('nome', aluno.nome);
+    dados.append('cpf', aluno.cpf);
+    dados.append('email', aluno.email);
+    dados.append('senha', aluno.senha);
+    dados.append('telefone', aluno.telefone);
+    dados.append('pronomes', aluno.pronomes);
+    dados.append('tipo', aluno.tipo);
 
-        return u;
-    })
-    localStorage.setItem('usuarios', JSON.stringify(usuariosEditar));
+    const resposta = await fetch(`php/usuario_php/usuario_alterar.php?id=${id}`, {
+        method: 'POST',
+        body: dados
+    });
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
 }
 
-function deletarAluno(id) {
+async function deletarAluno(id) {
     console.log(id)
-    const usuariosCorreto = JSON.parse(localStorage.getItem('usuarios')).filter(u => {
-        return u.id != id
-    })
-    console.log(usuariosCorreto)
-    localStorage.setItem('usuarios', JSON.stringify(usuariosCorreto));
-    carregarAluno()
+    const resposta = await fetch(`php/usuario_php/usuario_excluir.php?id=${id}`);
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
+
+    await carregarAluno()
 }
+
+carregarAluno();
