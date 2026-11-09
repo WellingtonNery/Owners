@@ -24,15 +24,13 @@ Esta entrega corresponde à **primeira etapa** do projeto: uma aplicação simpl
 Cada entidade do sistema possui sua própria página de CRUD:
 
 - `index.html` - Página inicial com menu do site
-- `aluno.html` / `aluno.js` - CRUD de Alunos
-- `professor.html` / `professor.js` - CRUD de Professores
-- `tecnico.html` / `tecnico.js` - CRUD de Técnicos
+- `aluno.html` / `aluno.js` - CRUD de Usuários (tipo: Aluno, Professor ou Técnico)
 - `equipamento.html` / `equipamento.js` - CRUD de Equipamentos
 - `sala.html` / `sala.js` - CRUD de Salas
 
 ## 🧑‍💻 Como usar
 
-Cada página de CRUD permite cadastrar, listar, editar e remover registros da respectiva entidade (aluno, professor, técnico, equipamento ou sala). A navegação entre as páginas é feita pela navbar presente no topo do site ou pelo menu principal.
+Cada página de CRUD permite cadastrar, listar, editar e remover registros da respectiva entidade (usuário, equipamento ou sala). A navegação entre as páginas é feita pela navbar presente no topo do site ou pelo menu principal.
 
 ## 👥 Equipe - OWNERS
 
