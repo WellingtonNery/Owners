@@ -1,7 +1,8 @@
 let editando = false;
 let salaEditando = null;
+let salas = [];
 
-function salvarSala(event) {
+async function salvarSala(event) {
     event.preventDefault();
 
     const salaNome = document.getElementById('sala-nome').value;
@@ -17,7 +18,8 @@ function salvarSala(event) {
             andar: salaAndar,
         };
 
-        editarSala(salaEditando.id, sala);
+        const atualizado = await editarSala(salaEditando.id, sala);
+        if (!atualizado) return;
 
         editando = false;
         salaEditando = null;
@@ -26,37 +28,44 @@ function salvarSala(event) {
 
         event.target.reset();
 
-        carregarSala();
+        await carregarSala();
 
         return;
     }
 
-    const salasAtuais = JSON.parse(localStorage.getItem('salas')) || [];
-
-    let idContagem = 1;
-
-    if (salasAtuais.length > 0) {
-        idContagem = salasAtuais.length + 1;
-    }
-
     const sala = {
-        id: idContagem,
         nome: salaNome,
         bloco: salaBloco,
         andar: salaAndar,
     };
 
-    salasAtuais.push(sala);
+    const dados = new FormData();
+    dados.append('nome', sala.nome);
+    dados.append('bloco', sala.bloco);
+    dados.append('andar', sala.andar);
 
-    localStorage.setItem('salas', JSON.stringify(salasAtuais));
+    const resposta = await fetch('php/sala_php/sala_novo.php', {
+        method: 'POST',
+        body: dados
+    });
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
+    if (retorno.status !== 'ok') return;
 
     event.target.reset();
 
-    carregarSala();
+    await carregarSala();
 }
 
-function carregarSala() {
-    const salas = JSON.parse(localStorage.getItem('salas')) || [];
+async function carregarSala() {
+    const resposta = await fetch('php/sala_php/sala_get.php');
+    const retorno = await resposta.json();
+
+    salas = [];
+    if (retorno.status === 'ok') {
+        salas = retorno.data;
+    }
     const lista = document.getElementById('sala-lista');
 
     lista.innerHTML = "";
@@ -65,7 +74,7 @@ function carregarSala() {
         lista.innerHTML += `
             <tr class="hover:bg-slate-50 transition">
                 <td class="px-6 py-4 font-medium text-slate-500">
-                    #${sala.id}
+                    #${sala.id_sala}
                 </td>
 
                 <td class="px-6 py-4 font-semibold text-slate-900">
@@ -84,13 +93,13 @@ function carregarSala() {
                     <div class="flex justify-center gap-2">
 
                         <button
-                            onClick="resgatarSala(${sala.id})"
+                            onClick="resgatarSala(${sala.id_sala})"
                             class="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 font-medium hover:bg-amber-200 transition">
                             Editar
                         </button>
 
                         <button
-                            onclick="deletarSala(${sala.id})"
+                            onclick="deletarSala(${sala.id_sala})"
                             class="px-3 py-2 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
                             Excluir
                         </button>
@@ -103,8 +112,8 @@ function carregarSala() {
 }
 
 function resgatarSala(id) {
-    const salasCorreto = JSON.parse(localStorage.getItem('salas')).filter(s => {
-        return s.id == id
+    const salasCorreto = salas.filter(s => {
+        return s.id_sala == id
     })
     const salaNome = document.getElementById('sala-nome').value = salasCorreto[0].nome;
     const salaBloco = document.getElementById('sala-bloco').value = salasCorreto[0].bloco;
@@ -123,25 +132,28 @@ function resgatarSala(id) {
 
 }
 
-function editarSala(id, sala) {
-    const salasEditar = JSON.parse(localStorage.getItem('salas')).map(s => {
-        if (s.id == id) {
-            s.nome = sala.nome;
-            s.bloco = sala.bloco;
-            s.andar = sala.andar;
-        }
+async function editarSala(id, sala) {
+    const dados = new FormData();
+    dados.append('nome', sala.nome);
+    dados.append('bloco', sala.bloco);
+    dados.append('andar', sala.andar);
 
-        return s;
-    })
-    localStorage.setItem('salas', JSON.stringify(salasEditar));
+    const resposta = await fetch(`php/sala_php/sala_alterar.php?id=${id}`, {
+        method: 'POST',
+        body: dados
+    });
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
+    return retorno.status === 'ok';
 }
 
-function deletarSala(id) {
-    const salasCorreto = JSON.parse(localStorage.getItem('salas')).filter(s => {
-        return s.id != id
-    })
-    localStorage.setItem('salas', JSON.stringify(salasCorreto));
-    carregarSala()
+async function deletarSala(id) {
+    const resposta = await fetch(`php/sala_php/sala_excluir.php?id=${id}`);
+    const retorno = await resposta.json();
+
+    alert(retorno.mensagem);
+    await carregarSala();
 }
 
 carregarSala();
