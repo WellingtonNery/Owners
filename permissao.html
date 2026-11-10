@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUC-Imprest</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-slate-100 text-slate-800">
+
+    <header class="bg-slate-900 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+
+                <div>
+                    <h1 class="text-3xl font-bold text-white">
+                        Sistema de Gerenciamento PUC-Imprest
+                    </h1>
+
+                    <p class="text-slate-400 mt-1">
+                        Controle de usuários, equipamentos, salas e permissões
+                    </p>
+                </div>
+
+                <nav class="flex flex-wrap gap-2">
+                    <a href="aluno.html"
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        Usuários
+                    </a>
+
+                    <a href="equipamento.html"
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        Equipamentos
+                    </a>
+
+                    <a href="sala.html"
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        Salas
+                    </a>
+
+                    <a href="permissao.html"
+                        class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition">
+                        Permissões
+                    </a>
+
+                    <a href="index.html"
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        Voltar
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+
+        <section id="permissoes">
+
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900">Permissões</h2>
+                <p class="text-slate-500 mt-1">
+                    Cadastre e gerencie as permissões de acesso do sistema.
+                </p>
+            </div>
+
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-semibold" id="form-titulo">Nova permissão</h3>
+                        <p class="text-sm text-slate-500">
+                            Preencha os dados abaixo para cadastrar.
+                        </p>
+                    </div>
+
+                    <div
+                        class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold">
+                        +
+                    </div>
+                </div>
+
+
+                <form id="form-permissao" onsubmit="salvarPermissao(event)"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div class="flex flex-col gap-2">
+                        <label for="permissao-nome" class="text-sm font-semibold text-slate-700">Nome</label>
+                        <input type="text" id="permissao-nome" name="nome" maxlength="80" required
+                            placeholder="Ex: CONSULTAR_EQUIPAMENTOS"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="permissao-recurso" class="text-sm font-semibold text-slate-700">Recurso</label>
+                        <select id="permissao-recurso" name="recurso" required
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                            <option value="">Selecione o recurso</option>
+                            <option value="equipamento">equipamento</option>
+                            <option value="emprestimo">emprestimo</option>
+                            <option value="usuario">usuario</option>
+                            <option value="perfil">perfil</option>
+                            <option value="perfil_permissao">perfil_permissao</option>
+                            <option value="sala">sala</option>
+                            <option value="controle_sala">controle_sala</option>
+                            <option value="registro_ocorrencia">registro_ocorrencia</option>
+                            <option value="endereco">endereco</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="permissao-acao" class="text-sm font-semibold text-slate-700">Ação</label>
+                        <select id="permissao-acao" name="acao" required
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                            <option value="">Selecione a ação</option>
+                            <option value="SELECT">SELECT (consultar)</option>
+                            <option value="INSERT">INSERT (cadastrar)</option>
+                            <option value="UPDATE">UPDATE (alterar)</option>
+                            <option value="DELETE">DELETE (excluir)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-span-2">
+                        <label for="permissao-descricao" class="text-sm font-semibold text-slate-700">Descrição (opcional)</label>
+                        <textarea id="permissao-descricao" name="descricao" rows="3" maxlength="255"
+                            placeholder="Descreva o que essa permissão autoriza"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"></textarea>
+                    </div>
+
+                    <div class="md:col-span-2 flex justify-end gap-3 pt-2">
+                        <button type="button" id="cancelar_button" onclick="cancelarEdicao()" hidden
+                            class="px-6 py-3 rounded-xl border border-slate-300 font-semibold text-slate-700 hover:bg-slate-100 transition">
+                            Cancelar edição
+                        </button>
+
+                        <button type="submit" id="salvar_button"
+                            class="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:-translate-y-0.5 shadow-md shadow-blue-200 transition">
+                            Salvar permissão
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+
+                <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold">Permissões cadastradas</h3>
+                        <p class="text-sm text-slate-500">
+                            Lista de permissões gravadas no banco de dados.
+                        </p>
+                    </div>
+
+                    <button onclick="carregarPermissoes()"
+                        class="px-4 py-2 rounded-lg border border-slate-300 font-medium text-slate-700 hover:bg-slate-100 transition">
+                        Atualizar
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-left">
+
+                        <thead class="bg-slate-50 text-slate-600 text-sm uppercase">
+                            <tr>
+                                <th class="px-6 py-4">ID</th>
+                                <th class="px-6 py-4">Nome</th>
+                                <th class="px-6 py-4">Recurso</th>
+                                <th class="px-6 py-4">Ação</th>
+                                <th class="px-6 py-4">Descrição</th>
+                                <th class="px-6 py-4 text-center">Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="permissao-lista" class="divide-y divide-slate-200">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="permissao.js"></script>
+
+</body>
+
+</html>
