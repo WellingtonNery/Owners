@@ -92,24 +92,24 @@ async function carregarAluno() {
 
     for (const usuario of usuarios) {
         lista.innerHTML += `
-            <tr class="hover:bg-slate-50 transition">
-                <td class="px-6 py-4 font-medium text-slate-500">
+            <tr class="hover:bg-puc-soft transition">
+                <td class="px-6 py-4 font-medium text-puc-ink/60">
                     #${usuario.id_usuario}
                 </td>
 
-                <td class="px-6 py-4 font-semibold text-slate-900">
+                <td class="px-6 py-4 font-semibold text-puc-ink">
                     ${usuario.nome}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${usuario.cpf}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${usuario.email}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${usuario.telefone}
                 </td>
 
@@ -118,13 +118,13 @@ async function carregarAluno() {
 
                         <button 
                             onClick="resgatarAluno(${usuario.id_usuario})"
-                            class="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 font-medium hover:bg-amber-200 transition">
+                            class="px-3 py-2 rounded-sm border border-puc text-puc font-display text-sm uppercase tracking-wide hover:bg-puc hover:text-white transition">
                             Editar
                         </button>
 
                         <button 
                             onclick="deletarAluno(${usuario.id_usuario})"
-                            class="px-3 py-2 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
+                            class="px-3 py-2 rounded-sm bg-puc text-white font-display text-sm uppercase tracking-wide hover:bg-puc-top transition">
                             Excluir
                         </button>
 

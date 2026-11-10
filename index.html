@@ -5,15 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PUC-Imprest</title>
+    <title>PUCImprest</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@300;400;500&display=swap');
+
         body {
-            background-color: #f5f6f8;
+            background-color: #EFEFEF;
+            color: #2B2B2B;
+            font-family: 'Lato', system-ui, sans-serif;
+        }
+
+        .navbar {
+            background-color: #A52D31 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .navbar-brand {
+            font-family: 'Oswald', 'Arial Narrow', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        h1,
+        h4 {
+            font-family: 'Oswald', 'Arial Narrow', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #8A2427;
+        }
+
+        .text-muted {
+            color: rgba(43, 43, 43, 0.7) !important;
         }
 
         .menu-card {
@@ -29,15 +58,19 @@
         .menu-icon {
             font-size: 55px;
             margin-bottom: 15px;
+            color: #8A2427 !important;
         }
 
         .card {
-            border: none;
-            border-radius: 15px;
+            border: 1px solid #d4d4d4;
+            border-top: 4px solid #8A2427;
+            border-radius: 0;
+            background-color: #fff;
             transition: 0.25s;
         }
 
         .card:hover {
+            background-color: #EDE0E0;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
     </style>
@@ -48,8 +81,8 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <span class="navbar-brand mb-0 h1">
-                <i class="bi bi-book"></i>
-                PUC-Imprest
+                <img src="img/logo-pucpr.png" alt="PUCPR" style="height: 40px; width: auto;" class="me-2 align-middle">
+                PUCImprest
             </span>
         </div>
     </nav>
@@ -66,7 +99,7 @@
         <div class="row g-4 justify-content-center">
 
             <div class="col-12 col-sm-6 col-lg-4">
-                <a href="aluno.html" class="menu-card">
+                <a href="usuario.html" class="menu-card">
                     <div class="card text-center p-4 h-100">
                         <div class="menu-icon text-primary">
                             <i class="bi bi-person-badge"></i>
