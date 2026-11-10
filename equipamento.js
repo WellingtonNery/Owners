@@ -1,82 +1,164 @@
-document.getElementById("btnEnviar").addEventListener("click", () => {
-    let nome = document.getElementById("nome").value;
-    let tipo = document.getElementById("tipo").value;
+let nomesSalas = {};
+let equipamentos = [];
 
-    let lista = JSON.parse(localStorage.getItem("Equipamento")) || [];
-    lista.push({ nome: nome, tipo: tipo });
 
-    localStorage.setItem("Equipamento", JSON.stringify(lista));
-
+document.addEventListener("DOMContentLoaded", async () => {
+    await carregarSalas();
     listarEquipamentos();
-    document.getElementById("nome").value = "";
-    document.getElementById("tipo").value = "";
 });
 
 
-function listarEquipamentos() {
-    let equipamentos = JSON.parse(localStorage.getItem("Equipamento")) || [];
+document.getElementById("btnEnviar").addEventListener("click", () => {
+    novo();
+});
+
+
+async function carregarSalas() {
+    const retorno = await fetch("equipamento_php/equipamento_salas.php");
+    const resposta = await retorno.json();
+
+    if (resposta.status == "ok") {
+        for (let sala of resposta.data) {
+            nomesSalas[sala.id_sala] = sala.nome;
+            document.getElementById("id_sala_origem").innerHTML += `<option value="${sala.id_sala}">${sala.nome}</option>`;
+        }
+    } else {
+        document.getElementById("id_sala_origem").innerHTML = `<option value="">Nenhuma sala cadastrada</option>`;
+    }
+}
+
+
+async function novo() {
+    const fd = new FormData();
+    fd.append("id_equipamento", document.getElementById("nome").value);
+    fd.append("id_sala_origem", document.getElementById("id_sala_origem").value);
+    fd.append("tipo", document.getElementById("tipo").value);
+
+    const retorno = await fetch("equipamento_php/equipamento_novo.php", {
+        method: "POST",
+        body: fd
+    });
+    const resposta = await retorno.json();
+
+    if (resposta.status == "ok") {
+        alert("SUCESSO: " + resposta.mensagem);
+        document.getElementById("nome").value = "";
+        document.getElementById("id_sala_origem").value = "";
+        document.getElementById("tipo").value = "";
+        listarEquipamentos();
+    } else {
+        alert("ERRO: " + resposta.mensagem);
+    }
+}
+
+
+async function listarEquipamentos() {
+    const retorno = await fetch("equipamento_php/equipamento_get.php");
+    const resposta = await retorno.json();
+
+    equipamentos = [];
     document.getElementById("conteudoTabela").innerHTML = "";
-    let indice = 0;
-    for (let equipamento of equipamentos) {
-        document.getElementById("conteudoTabela").innerHTML += `
-            <tr class="hover:bg-slate-50 transition">
-                <th class="px-6 py-4 font-semibold text-slate-900">
-                    ${equipamento.nome}
+
+    if (resposta.status == "ok") {
+        equipamentos = resposta.data;
+
+        for (let i = 0; i < equipamentos.length; i++) {
+            const equipamento = equipamentos[i];
+
+            document.getElementById("conteudoTabela").innerHTML += `
+            <tr class="hover:bg-puc-soft transition">
+                <th class="px-6 py-4 font-semibold text-puc-ink">
+                    ${equipamento.id_equipamento}
                 </th>
-                <th class="px-6 py-4 text-slate-600">
+                <th class="px-6 py-4 text-puc-ink/80">
                     ${equipamento.tipo}
+                </th>
+                <th class="px-6 py-4 text-puc-ink/80">
+                    ${nomesSalas[equipamento.id_sala_origem]}
                 </th>
                 <th class="px-6 py-4">
                     <button
-                        onclick="editar(${indice})"
-                        class="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 font-medium hover:bg-amber-200 transition">
+                        onclick="editar(${i})"
+                        class="px-3 py-2 rounded-sm border border-puc text-puc font-display text-sm uppercase tracking-wide hover:bg-puc hover:text-white transition">
                         Editar
                     </button>
                 </th>
                 <th class="px-6 py-4">
                     <button
-                        onclick="excluir(${indice})"
-                        class="px-3 py-2 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
+                        onclick="excluir(${i})"
+                        class="px-3 py-2 rounded-sm bg-puc text-white font-display text-sm uppercase tracking-wide hover:bg-puc-top transition">
                         Excluir
                     </button>
                 </th>
             </tr>`;
-        indice++;
+        }
     }
 }
 
 
-function excluir(indice) {
-    let equipamentos = JSON.parse(localStorage.getItem("Equipamento")) || [];
-    equipamentos.splice(indice, 1);
-    localStorage.setItem("Equipamento", JSON.stringify(equipamentos));
-    listarEquipamentos();
+async function excluir(indice) {
+    const id = equipamentos[indice].id_equipamento;
+
+    const retorno = await fetch("equipamento_php/equipamento_excluir.php?id=" + encodeURIComponent(id));
+    const resposta = await retorno.json();
+
+    alert(resposta.mensagem);
+
+    if (resposta.status == "ok") {
+        listarEquipamentos();
+    }
 }
 
 
-function editar(indice) {
-    let equipamentos = JSON.parse(localStorage.getItem("Equipamento")) || [];
+async function editar(indice) {
+    const id = equipamentos[indice].id_equipamento;
 
-    document.getElementById("nome").value = equipamentos[indice].nome;
-    document.getElementById("tipo").value = equipamentos[indice].tipo;
-    document.getElementById("btnEnviar").disabled = true;
-    document.getElementById("alterar").innerHTML = `
+    const retorno = await fetch("equipamento_php/equipamento_get.php?id=" + encodeURIComponent(id));
+    const resposta = await retorno.json();
+
+    if (resposta.status == "ok") {
+        const equipamento = resposta.data[0];
+
+        document.getElementById("nome").value = equipamento.id_equipamento;
+        document.getElementById("nome").readOnly = true;
+        document.getElementById("id_sala_origem").value = equipamento.id_sala_origem;
+        document.getElementById("tipo").value = equipamento.tipo;
+        document.getElementById("btnEnviar").disabled = true;
+        document.getElementById("alterar").innerHTML = `
         <button
-            onclick="alterar(${indice})"
-            class="px-6 py-3 mt-4 rounded-xl bg-amber-500 text-white font-semibold hover:bg-amber-600 hover:-translate-y-0.5 shadow-md shadow-amber-200 transition">
+            onclick="alterar()"
+            class="px-6 py-3 mt-4 rounded-sm bg-puc text-white font-display uppercase tracking-wide hover:bg-puc-top transition">
             Alterar equipamento
         </button>`;
+    } else {
+        alert("ERRO: " + resposta.mensagem);
+    }
 }
 
 
-function alterar(indice) {
-    let equipamentos = JSON.parse(localStorage.getItem("Equipamento"));
-    equipamentos[indice].nome = document.getElementById("nome").value;
-    equipamentos[indice].tipo = document.getElementById("tipo").value;
-    document.getElementById("alterar").innerHTML = "";
-    document.getElementById("btnEnviar").disabled = false;
-    localStorage.setItem("Equipamento", JSON.stringify(equipamentos));
-    listarEquipamentos();
-    document.getElementById("nome").value = "";
-    document.getElementById("tipo").value = "";
+async function alterar() {
+    const id = document.getElementById("nome").value;
+
+    const fd = new FormData();
+    fd.append("id_sala_origem", document.getElementById("id_sala_origem").value);
+    fd.append("tipo", document.getElementById("tipo").value);
+
+    const retorno = await fetch("equipamento_php/equipamento_alterar.php?id=" + encodeURIComponent(id), {
+        method: "POST",
+        body: fd
+    });
+    const resposta = await retorno.json();
+
+    if (resposta.status == "ok") {
+        alert("SUCESSO: " + resposta.mensagem);
+        document.getElementById("alterar").innerHTML = "";
+        document.getElementById("btnEnviar").disabled = false;
+        document.getElementById("nome").readOnly = false;
+        document.getElementById("nome").value = "";
+        document.getElementById("id_sala_origem").value = "";
+        document.getElementById("tipo").value = "";
+        listarEquipamentos();
+    } else {
+        alert("ERRO: " + resposta.mensagem);
+    }
 }

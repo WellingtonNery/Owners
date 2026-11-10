@@ -4,56 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUC-Imprest</title>
+    <title>PUCImprest</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        puc: { DEFAULT: '#8A2427', top: '#A52D31', soft: '#EDE0E0', bg: '#EFEFEF', ink: '#2B2B2B' }
+                    },
+                    fontFamily: {
+                        display: ['Oswald', '"Arial Narrow"', 'sans-serif'],
+                        sans: ['Lato', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body class="min-h-screen bg-slate-100 text-slate-800">
+<body class="min-h-screen bg-puc-bg text-puc-ink font-sans">
 
-    <header class="bg-slate-900 shadow-lg">
+    <header class="bg-puc-top border-b border-white/40">
         <div class="max-w-7xl mx-auto px-6 py-6">
 
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
-                <div>
-                    <h1 class="text-3xl font-bold text-white">
-                        Sistema de Gerenciamento PUC-Imprest
-                    </h1>
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="shrink-0">
+                        <img src="img/logo-pucpr.png" alt="PUCPR" class="h-14 w-auto block">
+                    </a>
+                    <div>
+                        <h1 class="font-display text-3xl font-normal uppercase tracking-wide text-white">
+                            Sistema de Gerenciamento PUCImprest
+                        </h1>
 
-                    <p class="text-slate-400 mt-1">
-                        Controle de usuários, equipamentos, salas e permissões
-                    </p>
+                        <p class="text-white/80 mt-1">
+                            Controle de usuários, equipamentos, salas e permissões
+                        </p>
+                    </div>
                 </div>
 
                 <nav class="flex flex-wrap gap-2">
-                    <a href="usuario.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
-                        Usuários
-                    </a>
-
                     <a href="equipamento.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition text-white/85 hover:bg-puc hover:text-white">
                         Equipamentos
                     </a>
 
-                    <a href="sala.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
-                        Salas
-                    </a>
-
                     <a href="ocorrencia.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition text-white/85 hover:bg-puc hover:text-white">
                         Ocorrências
                     </a>
 
                     <a href="permissao.html"
-                        class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition">
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition bg-puc text-white">
                         Permissões
                     </a>
 
+                    <a href="sala.html"
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition text-white/85 hover:bg-puc hover:text-white">
+                        Salas
+                    </a>
+
+                    <a href="usuario.html"
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition text-white/85 hover:bg-puc hover:text-white">
+                        Usuários
+                    </a>
+
                     <a href="index.html"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition">
+                        class="px-4 py-2 rounded-sm font-display uppercase tracking-wide transition text-white/85 hover:bg-puc hover:text-white">
                         Voltar
                     </a>
                 </nav>
@@ -67,26 +89,26 @@
 
         <section id="permissoes">
 
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-slate-900">Permissões</h2>
-                <p class="text-slate-500 mt-1">
+            <div class="mb-8 bg-puc-soft border-l-8 border-puc px-5 py-4">
+                <h2 class="font-display text-3xl font-normal uppercase tracking-wide text-puc">Permissões</h2>
+                <p class="text-puc-ink/70 mt-1">
                     Cadastre e gerencie as permissões de acesso do sistema.
                 </p>
             </div>
 
 
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+            <div class="bg-white border border-neutral-300 p-6 mb-8">
 
-                <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center justify-between -mx-6 -mt-6 mb-6 px-6 py-4 bg-puc [&_h3]:text-white [&_p]:text-white/80">
                     <div>
-                        <h3 class="text-xl font-semibold" id="form-titulo">Nova permissão</h3>
-                        <p class="text-sm text-slate-500">
+                        <h3 class="font-display text-xl font-normal uppercase tracking-wide" id="form-titulo">Nova permissão</h3>
+                        <p class="text-sm text-puc-ink/60">
                             Preencha os dados abaixo para cadastrar.
                         </p>
                     </div>
 
                     <div
-                        class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold">
+                        class="w-10 h-10 bg-white text-puc rounded-sm flex items-center justify-center font-bold">
                         +
                     </div>
                 </div>
@@ -96,16 +118,16 @@
                     class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                     <div class="flex flex-col gap-2">
-                        <label for="permissao-nome" class="text-sm font-semibold text-slate-700">Nome</label>
+                        <label for="permissao-nome" class="font-display text-sm font-normal uppercase tracking-wide text-puc">Nome</label>
                         <input type="text" id="permissao-nome" name="nome" maxlength="80" required
                             placeholder="Ex: CONSULTAR_EQUIPAMENTOS"
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                            class="w-full px-4 py-3 rounded-sm border border-neutral-400 bg-white outline-none focus:border-puc focus:ring-2 focus:ring-puc/20 transition">
                     </div>
 
                     <div class="flex flex-col gap-2">
-                        <label for="permissao-recurso" class="text-sm font-semibold text-slate-700">Recurso</label>
+                        <label for="permissao-recurso" class="font-display text-sm font-normal uppercase tracking-wide text-puc">Recurso</label>
                         <select id="permissao-recurso" name="recurso" required
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                            class="w-full px-4 py-3 rounded-sm border border-neutral-400 bg-white outline-none focus:border-puc focus:ring-2 focus:ring-puc/20 transition">
                             <option value="">Selecione o recurso</option>
                             <option value="equipamento">equipamento</option>
                             <option value="emprestimo">emprestimo</option>
@@ -120,9 +142,9 @@
                     </div>
 
                     <div class="flex flex-col gap-2">
-                        <label for="permissao-acao" class="text-sm font-semibold text-slate-700">Ação</label>
+                        <label for="permissao-acao" class="font-display text-sm font-normal uppercase tracking-wide text-puc">Ação</label>
                         <select id="permissao-acao" name="acao" required
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
+                            class="w-full px-4 py-3 rounded-sm border border-neutral-400 bg-white outline-none focus:border-puc focus:ring-2 focus:ring-puc/20 transition">
                             <option value="">Selecione a ação</option>
                             <option value="SELECT">SELECT (consultar)</option>
                             <option value="INSERT">INSERT (cadastrar)</option>
@@ -132,20 +154,20 @@
                     </div>
 
                     <div class="flex flex-col gap-2 md:col-span-2">
-                        <label for="permissao-descricao" class="text-sm font-semibold text-slate-700">Descrição (opcional)</label>
+                        <label for="permissao-descricao" class="font-display text-sm font-normal uppercase tracking-wide text-puc">Descrição (opcional)</label>
                         <textarea id="permissao-descricao" name="descricao" rows="3" maxlength="255"
                             placeholder="Descreva o que essa permissão autoriza"
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"></textarea>
+                            class="w-full px-4 py-3 rounded-sm border border-neutral-400 bg-white outline-none focus:border-puc focus:ring-2 focus:ring-puc/20 transition"></textarea>
                     </div>
 
                     <div class="md:col-span-2 flex justify-end gap-3 pt-2">
                         <button type="button" id="cancelar_button" onclick="cancelarEdicao()" hidden
-                            class="px-6 py-3 rounded-xl border border-slate-300 font-semibold text-slate-700 hover:bg-slate-100 transition">
+                            class="px-6 py-3 rounded-sm border border-puc font-display uppercase tracking-wide text-puc hover:bg-puc-soft transition">
                             Cancelar edição
                         </button>
 
                         <button type="submit" id="salvar_button"
-                            class="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:-translate-y-0.5 shadow-md shadow-blue-200 transition">
+                            class="px-6 py-3 rounded-sm bg-puc text-white font-display uppercase tracking-wide hover:bg-puc-top transition">
                             Salvar permissão
                         </button>
                     </div>
@@ -155,27 +177,27 @@
             </div>
 
 
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-white border border-neutral-300 overflow-hidden">
 
-                <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
+                <div class="px-6 py-5 bg-puc flex items-center justify-between [&_h3]:text-white [&_p]:text-white/80">
                     <div>
-                        <h3 class="text-xl font-semibold">Permissões cadastradas</h3>
-                        <p class="text-sm text-slate-500">
+                        <h3 class="font-display text-xl font-normal uppercase tracking-wide">Permissões cadastradas</h3>
+                        <p class="text-sm text-puc-ink/60">
                             Lista de permissões gravadas no banco de dados.
                         </p>
                     </div>
 
                     <button onclick="carregarPermissoes()"
-                        class="px-4 py-2 rounded-lg border border-slate-300 font-medium text-slate-700 hover:bg-slate-100 transition">
+                        class="px-4 py-2 rounded-sm border border-white/70 font-display uppercase tracking-wide text-white hover:bg-white hover:text-puc transition">
                         Atualizar
                     </button>
                 </div>
 
                 <div class="overflow-x-auto">
 
-                    <table class="w-full text-left">
+                    <table class="w-full text-left border-b-2 border-puc">
 
-                        <thead class="bg-slate-50 text-slate-600 text-sm uppercase">
+                        <thead class="bg-puc-soft text-puc font-display text-sm uppercase tracking-wide">
                             <tr>
                                 <th class="px-6 py-4">ID</th>
                                 <th class="px-6 py-4">Nome</th>
@@ -186,7 +208,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="permissao-lista" class="divide-y divide-slate-200">
+                        <tbody id="permissao-lista" class="divide-y divide-puc/20 [&>tr:nth-child(odd):not(:hover)]:bg-puc-bg">
                         </tbody>
 
                     </table>

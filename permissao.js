@@ -48,7 +48,7 @@ async function carregarPermissoes() {
     if (permissoes.length === 0) {
         lista.innerHTML = `
             <tr>
-                <td colspan="6" class="px-6 py-8 text-center text-slate-500">
+                <td colspan="6" class="px-6 py-8 text-center text-puc-ink/60">
                     Nenhuma permissão cadastrada.
                 </td>
             </tr>`;
@@ -57,24 +57,24 @@ async function carregarPermissoes() {
 
     for (const p of permissoes) {
         lista.innerHTML += `
-            <tr class="hover:bg-slate-50 transition">
-                <td class="px-6 py-4 font-medium text-slate-500">
+            <tr class="hover:bg-puc-soft transition">
+                <td class="px-6 py-4 font-medium text-puc-ink/60">
                     #${escapar(p.id_permissao)}
                 </td>
 
-                <td class="px-6 py-4 font-semibold text-slate-900">
+                <td class="px-6 py-4 font-semibold text-puc-ink">
                     ${escapar(p.nome)}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${escapar(p.recurso)}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${escapar(p.acao)}
                 </td>
 
-                <td class="px-6 py-4 text-slate-600">
+                <td class="px-6 py-4 text-puc-ink/80">
                     ${escapar(p.descricao)}
                 </td>
 
@@ -83,13 +83,13 @@ async function carregarPermissoes() {
 
                         <button
                             onclick="resgatarPermissao(${Number(p.id_permissao)})"
-                            class="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 font-medium hover:bg-amber-200 transition">
+                            class="px-3 py-2 rounded-sm border border-puc text-puc font-display text-sm uppercase tracking-wide hover:bg-puc hover:text-white transition">
                             Editar
                         </button>
 
                         <button
                             onclick="deletarPermissao(${Number(p.id_permissao)})"
-                            class="px-3 py-2 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
+                            class="px-3 py-2 rounded-sm bg-puc text-white font-display text-sm uppercase tracking-wide hover:bg-puc-top transition">
                             Excluir
                         </button>
 
